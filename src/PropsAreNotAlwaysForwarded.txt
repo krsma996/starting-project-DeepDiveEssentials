@@ -1,0 +1,61 @@
+Ssad iako sam ja prepravio komponentu da bude ovako 
+
+<Section title={"Examples"} id="examples">
+      <menu>
+        <TabButton
+          onClick={() => onClick("components")}
+          isSelected={selectedTopic === "components"}
+        >
+          Components
+        </TabButton>
+        <TabButton
+          onClick={() => onClick("jsx")}
+          isSelected={selectedTopic === "jsx"}
+        >
+          JSX
+        </TabButton>
+        <TabButton
+          onClick={() => onClick("state")}
+          isSelected={selectedTopic === "state"}
+        >
+          State
+        </TabButton>
+        <TabButton
+          onClick={() => onClick("props")}
+          isSelected={selectedTopic === "props"}
+        >
+          Props
+        </TabButton>
+      </menu>
+      <main>
+        {!selectedTopic ? (
+          <p>Please select a topic</p>
+        ) : (
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedTopic].code}</code>
+            </pre>
+          </div>
+        )}
+      </main>
+    </Section>
+
+    da umesto taga <section></section>
+    napravim kompoenntu <Section></Section>
+    de ce se svi njeni childreni forwardovati i al ono sto je zajeb jeste da 
+
+    Napomena: Iako postoji CSS pravilo za #examples i dodatni stilovi vezani za <h2>, važno je znati da props poput id i className se ne prosleđuju automatski sa roditeljskog komponenta (kao što je Section) na DOM elemente unutar nje. Ako želiš da id="examples" bude postavljen direktno na <section> HTML element, moraš eksplicitno proslediti taj prop i koristiti ga u komponenti Section, npr:
+
+    export default function Section({ title, children, id }) {
+  return (
+    <section id={id}>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
+U suprotnom, CSS selektor #examples neće pogoditi ništa jer id neće biti postavljen u DOM. Ovo je česta greška kada se koristi JSX i komponentni pristup u React-u.
+
+moras rucno sve te atribute sam da ih postavis inace nece da radi micko !

@@ -1,0 +1,47 @@
+export default function Section({title,children,...props}){
+    return(
+          <section id={..props}>
+            <h2>{title}</h2>
+            {children}
+        </section>
+    )
+}
+
+
+..props je javascript feature ne reactov da kazes da u Section komponenti da ocekujes 
+jos koje moguce atribute koji budu dosli da ih setujes
+
+znaci setaovace sve isto atribute koje ocekujes iz parent kompoennte u ovu section komponentu
+isto moze se odradi iza tabButton
+
+export default function TabButton({children,isSelected,...props}) {
+
+    return (
+    <li>
+      <button className={isSelected ? "active":null}{...props}>{children}</button>
+    </li>
+  );
+}
+
+
+umesto sto smo imali onClick rucno funckiju da mu prosledimo isto iskoristimo samo 
+...props i setujemo diretno na mestu de treba se setje i to je sve
+
+
+
+// ⚠️ Napomena:
+// Korišćenjem `...props` u komponentama (npr. Section, TabButton) omogućavaš da se
+// svi dodatni atributi (npr. id, onClick, className itd.) proslede automatski na DOM elemente.
+// Ovo je JavaScript/React pattern za "forwarding props".
+
+// Primer za Section:
+// Ako se iz parent komponente pozove <Section id="examples">,
+// `id="examples"` neće biti automatski prosleđen na <section> HTML element
+// osim ako eksplicitno ne uradiš: <section {...props}>.
+
+// Primer za TabButton:
+// Umesto da posebno pišemo onClick i druge props, možemo koristiti {...props} direktno:
+// <button {...props}> – React će postaviti sve prosleđene atribute (onClick, type, itd.).
+// className i drugi atributi se mogu kombinovati sa logikom ako je potrebno.
+
+
