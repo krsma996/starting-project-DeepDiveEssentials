@@ -1,5 +1,5 @@
-import { CORE_CONCEPTS_MAP } from "./data.js";
-import CoreConcepts from "./components/CoreConcepts.jsx";
+import {CORE_CONCEPTS_MAP} from "../data.js";
+import CoreConcepts from "../components/CoreConcepts.jsx";
 
 export default function CoreConcept() {
   return (
