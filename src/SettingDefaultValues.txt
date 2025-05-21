@@ -1,0 +1,16 @@
+export default function Tabs({ children, buttons,ButtonsContainer="menu" }) {
+   // const ButtonsContainer = buttonsContainer;
+  return (
+    <>
+      <ButtonsContainer>{buttons}</ButtonsContainer>
+      {children}
+    </>
+  );
+}
+
+
+for je gore u funkciji taj ButtonsContainer="menu" moze se setuje defaulnta vrednost za komponentu
+da ne moras da se cimas tamo u Examples da pravis komplikovanije mozes ovde lakse to je sve
+
+dal je 'menu"
+mozes isto da stavis u neku drugu komponentu samo ces morati da je importujes npr Section
