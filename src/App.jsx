@@ -1,63 +1,21 @@
-import CoreConcepts from "./components/CoreConcepts.jsx";
+
 import Header from "./components/Header.jsx";
-import TabButton from "./components/TabButton.jsx";
-import { CORE_CONCEPTS_MAP } from "./data.js";
-import { EXAMPLES } from "./data.js";
-import { useState } from "react";
+import {CoreConcept} from "./components/CoreConcept.jsx"
+import Examples from "./components/Examples.jsx";
 
 
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState("");
 
-  function onClick(selectedTab) {
-    setSelectedTopic(selectedTab);
-
-  }
 
   return (
-    <div>
+    <>
       <Header />
       <main>
-        <section id="core-concepts">
-          <h2>Core concepts</h2>
-          <ul>
-            {CORE_CONCEPTS_MAP.map((concepts) => (
-              <CoreConcepts
-                key={concepts.id}
-                title={concepts.title}
-                image={concepts.image}
-                description={concepts.description}
-              />
-            ))}
-          </ul>
-        </section>
-        <section id="examples">
-          <h2>Examples</h2>
-          <menu>
-            <TabButton onClick={() => onClick("components")} isSelected={selectedTopic ==='components'}>
-              Components
-            </TabButton>
-            <TabButton onClick={() => onClick("jsx")} isSelected={selectedTopic === "jsx" }>JSX</TabButton>
-            <TabButton onClick={() => onClick("state")} isSelected={selectedTopic === "state"}>State</TabButton>
-            <TabButton onClick={() => onClick("props")} isSelected={selectedTopic ==='props'}>Props</TabButton>
-          </menu>
-        </section>
+        <CoreConcept />
+        <Examples />
       </main>
-      <main>
-        {!selectedTopic ? (
-          <p>Please select a topic</p>
-        ) : (
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title}</h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTopic].code}</code>
-            </pre>
-          </div>
-        )}
-      </main>
-    </div>
+    </>
   );
 }
 
