@@ -1,0 +1,110 @@
+// ✅ Import potrebnih komponenti i hookova
+import TabButton from "../components/TabButton.jsx";
+import { EXAMPLES } from "../data.js";
+import { useState } from "react";
+import Section from "./Section.jsx";
+import Tabs from "./Tabs.jsx";
+
+// ✅ Examples komponenta je glavni container
+export default function Examples() {
+  const [selectedTopic, setSelectedTopic] = useState("");
+
+  function onClick(selectedTab) {
+    setSelectedTopic(selectedTab);
+  }
+
+  // Po defaultu poruka kada ništa nije selektovano
+  let tabContent = <p>Please select a topic.</p>;
+
+  // Ako je selektovan tab, prikazuje se odgovarajući sadržaj iz EXAMPLES
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  return (
+    <Section title={"Examples"} id="examples">
+      {/* 🔽 Ovde dinamički prosleđujemo built-in HTML tag `menu` kao komponentu */}
+      <Tabs
+        ButtonsContainer="menu" // prosleđujemo kao string ime ugrađene komponente
+        buttons={
+          <>
+            <TabButton
+              onClick={() => onClick("components")}
+              isSelected={selectedTopic === "components"}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("jsx")}
+              isSelected={selectedTopic === "jsx"}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("state")}
+              isSelected={selectedTopic === "state"}
+            >
+              State
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("props")}
+              isSelected={selectedTopic === "props"}
+            >
+              Props
+            </TabButton>
+          </>
+        }
+      >
+        {tabContent}
+      </Tabs>
+
+      {/* Ovo <menu> je višak ovde jer već koristiš menu u Tabs */}
+      <menu></menu>
+    </Section>
+  );
+}
+
+
+// ✅ Tabs komponenta prima: children, buttons, ButtonsContainer
+// ButtonsContainer je zapravo komponenta (može biti JSX element ili string poput 'menu', 'div' itd.)
+
+export default function Tabs({ children, buttons, ButtonsContainer }) {
+  // Ako si prosledio ButtonsContainer="menu", React to tretira kao komponentu (jer sve što počne velikim slovom je komponenta)
+  // Ako proslediš malim slovom, npr. buttonsContainer="menu", moraš da napraviš alias kao u komentaru ispod:
+  // const ButtonsContainer = buttonsContainer;
+
+  return (
+    <>
+      <ButtonsContainer>{buttons}</ButtonsContainer>
+      {children}
+    </>
+  );
+}
+
+
+✅ Objašnjenje ključne logike:
+🔷 1. Prosleđivanje komponente kao prop-a
+U Reactu, možeš proslediti komponentu kao prop i koristiti je kao tag:
+<Tabs ButtonsContainer="menu" />
+Ovo je moguće jer u Reactu čak i "menu" tretira kao validan JSX tag ako ga koristiš kao <menu>...</menu> — React će ga renderovati kao HTML tag.
+
+🔷 2. PascalCase vs camelCase
+✅ ButtonsContainer – React ga tretira kao komponentu, tj. očekuje <ButtonsContainer />
+
+⚠️ Ako koristiš buttonsContainer, onda moraš definisati unutar komponente:
+const ButtonsContainer = buttonsContainer;
+
+✅ Zaključak:
+Ovaj pristup ti omogućava:
+
+da dinamički renderuješ različite kontejnere (npr. div, menu, nav, section, custom komponente),
+
+da pišeš fleksibilne i reusabilne komponente koje se ponašaju različito u zavisnosti od prosleđene komponente.

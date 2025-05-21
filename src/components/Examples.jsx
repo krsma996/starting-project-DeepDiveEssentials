@@ -35,6 +35,7 @@ export default function Examples() {
   return (
     <Section title={"Examples"} id="examples">
       <Tabs
+        ButtonsContainer="menu"
         buttons={
           <>
             <TabButton
@@ -66,7 +67,6 @@ export default function Examples() {
       >
         {tabContent}
       </Tabs>
-      <menu></menu>
     </Section>
   );
 }
