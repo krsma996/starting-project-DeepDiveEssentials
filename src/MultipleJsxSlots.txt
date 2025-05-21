@@ -1,0 +1,102 @@
+
+// ✅ Examples komponenta koristi useState da pamti koji je tab trenutno selektovan
+// Kada korisnik klikne na dugme (TabButton), poziva se `onClick` i postavlja se novi `selectedTopic`
+// Na osnovu toga se prikazuje odgovarajući sadržaj iz EXAMPLES objekta
+
+export default function Examples() {
+  const [selectedTopic, setSelectedTopic] = useState("");
+
+  function onClick(selectedTab) {
+    setSelectedTopic(selectedTab);
+  }
+
+  // Prikaz sadržaja za izabrani tab – ako ništa nije izabrano, prikazuje poruku
+  let tabContent = <p>Please select a topic.</p>;
+
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  return (
+    // 🔽 Section je wrapper komponenta koja prima title i children
+    <Section title={"Examples"} id="examples">
+
+      {/* 🔽 Tabs je komponenta koja prima dve vrednosti (slotove): buttons i children 
+          - buttons: JSX za dugmiće
+          - children: sadržaj koji zavisi od aktivnog taba */}
+      <Tabs
+        buttons={
+          <>
+            {/* 🔽 TabButton se koristi za svaki tab – koristi props onClick i isSelected */}
+            {/* Kada korisnik klikne dugme, menja se selectedTopic */}
+            <TabButton
+              onClick={() => onClick("components")}
+              isSelected={selectedTopic === "components"}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("jsx")}
+              isSelected={selectedTopic === "jsx"}
+            >
+              JSX
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("state")}
+              isSelected={selectedTopic === "state"}
+            >
+              State
+            </TabButton>
+            <TabButton
+              onClick={() => onClick("props")}
+              isSelected={selectedTopic === "props"}
+            >
+              Props
+            </TabButton>
+          </>
+        }
+      >
+        {/* 🔽 tabContent je JSX koji zavisi od selektovanog taba */}
+        {tabContent}
+      </Tabs>
+
+      {/* Prazan <menu> ovde trenutno nije potreban */}
+      <menu></menu>
+    </Section>
+  );
+}
+
+// ✅ Tabs komponenta je fleksibilan layout wrapper
+// Prima props: buttons (JSX za dugmiće) i children (glavni sadržaj)
+// Može se lako proširiti u budućnosti ako treba još slotova ili layout promena
+export default function Tabs({children, buttons}) {
+  return (
+    <>
+      <menu>
+        {buttons}
+      </menu>
+      {children}
+    </>
+  );
+}
+
+
+
+// ✅ Beleška:
+// Komponenta <Tabs> ovde služi kao **wrapper komponenta** – obavija i organizuje JSX sadržaj.
+// Prima dva "slota": `buttons` i `children`, koji su zapravo JSX vrednosti prosleđene kao props.
+
+// Ovo omogućava da:
+// 1. Dinamički prikažemo JSX preko {} jer su to sve vrednosti u React-u.
+// 2. Razdvojimo logiku prikaza dugmića (`buttons`) od prikaza sadržaja (`children`).
+// 3. <Tabs> može lako da se **reusabl-uje** – u budućnosti možemo dodati još "slotova" ako treba.
+
+// Na ovaj način imamo čistu strukturu i fleksibilan wrapper layout.
