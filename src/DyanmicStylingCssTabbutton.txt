@@ -1,0 +1,60 @@
+function App() {
+  // State koji čuva trenutno selektovani tab (npr. "components", "jsx", itd.)
+  const [selectedTopic, setSelectedTopic] = useState("");
+
+  // Funkcija koja se poziva kada korisnik klikne na tab dugme.
+  // Ažurira stanje sa trenutno izabranim tabom.
+  function onClick(selectedTab) {
+    setSelectedTopic(selectedTab);
+  }
+
+  return (
+    <>
+      <h2>Examples</h2>
+      <menu>
+        {/* Svako Tab dugme proverava da li je trenutno selektovano i prosleđuje to kao isSelected */}
+        <TabButton onClick={() => onClick("components")} isSelected={selectedTopic === 'components'}>
+          Components
+        </TabButton>
+        <TabButton onClick={() => onClick("jsx")} isSelected={selectedTopic === "jsx"}>
+          JSX
+        </TabButton>
+        <TabButton onClick={() => onClick("state")} isSelected={selectedTopic === "state"}>
+          State
+        </TabButton>
+        <TabButton onClick={() => onClick("props")} isSelected={selectedTopic === 'props'}>
+          Props
+        </TabButton>
+      </menu>
+
+      {/* Glavni deo koji prikazuje sadržaj na osnovu izabranog taba */}
+      {!selectedTopic ? (
+        // Prikazuje poruku dok nije ništa selektovano
+        <p>Please select a topic</p>
+      ) : (
+        <div id="tab-content">
+          {/* Prikaz naslova, opisa i koda iz EXAMPLES objekta */}
+          <h3>{EXAMPLES[selectedTopic].title}</h3>
+          <p>{EXAMPLES[selectedTopic].description}</p>
+          <pre>
+            <code>{EXAMPLES[selectedTopic].code}</code>
+          </pre>
+        </div>
+      )}
+    </>
+  );
+}
+export default function TabButton({ children, onClick, isSelected }) {
+  return (
+    <li>
+      <button
+        // Dodaje klasu "active" ako je trenutni tab selektovan.
+        // Klasa "active" se koristi u CSS-u da stilizuje aktivno dugme (npr. da ima drugu boju).
+        className={isSelected ? "active" : null}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    </li>
+  );
+}

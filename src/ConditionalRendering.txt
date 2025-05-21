@@ -1,0 +1,65 @@
+// ==============================
+// USLOVNI PRIKAZ SADRŽAJA U REACT-u
+// ==============================
+
+const [selectedTopic, setSelectedTopic] = useState(""); // inicijalno nije izabran nijedan topic
+
+// ----------------------------------
+// 1. TERNARNI OPERATOR
+// Koristi se kada želiš prikaz A ili B u zavisnosti od uslova
+// Format: uslov ? akoJeTrue : akoJeFalse
+// ----------------------------------
+<main>
+  {!selectedTopic ? (
+    <p>Please select a topic</p>
+  ) : (
+    <div id="tab-content">
+      <h3>{EXAMPLES[selectedTopic].title}</h3>
+      <p>{EXAMPLES[selectedTopic].description}</p>
+      <pre>
+        <code>{EXAMPLES[selectedTopic].code}</code>
+      </pre>
+    </div>
+  )}
+</main>
+
+// ----------------------------------
+// 2. LOGIČKI && OPERATOR
+// Prikazuje element SAMO ako je uslov tačan
+// Format: uslov && prikaz
+// Korisno kada treba da se prikaže samo jedna grana
+// ----------------------------------
+<main>
+  {!selectedTopic && <p>Please select a topic</p>}
+
+  {selectedTopic && (
+    <div id="tab-content">
+      <h3>{EXAMPLES[selectedTopic].title}</h3>
+      <p>{EXAMPLES[selectedTopic].description}</p>
+      <pre>
+        <code>{EXAMPLES[selectedTopic].code}</code>
+      </pre>
+    </div>
+  )}
+</main>
+
+// ----------------------------------
+// 3. USLOVNI SADRŽAJ KROZ PROMENLJIVU
+// Prvo dodeliš podrazumevani JSX promenljivoj, pa uslovno menjaš
+// Lakše za čitanje i koristi se za kompleksnije uslove
+// ----------------------------------
+let tabContent = <p>Please select a topic</p>;
+
+if (selectedTopic) {
+  tabContent = (
+    <div id="tab-content">
+      <h3>{EXAMPLES[selectedTopic].title}</h3>
+      <p>{EXAMPLES[selectedTopic].description}</p>
+      <pre>
+        <code>{EXAMPLES[selectedTopic].code}</code>
+      </pre>
+    </div>
+  );
+}
+
+<main>{tabContent}</main>

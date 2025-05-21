@@ -1,0 +1,60 @@
+/*
+  U React-u postoji više načina da prosledimo funkcije kroz props 
+  – posebno kada želimo da prosledimo i argumente.
+
+  Jedan od uobičajenih načina je korišćenje **arrow funkcije unutar JSX-a**.
+
+  // Primer:
+  function onClick(selectedTab) {
+    console.log(selectedTab);
+  }
+
+  function App() {
+    return (
+      <>
+        <TabButton onClick={() => onClick("Components")}>Components</TabButton>
+        <TabButton onClick={() => onClick("JSX")}>JSX</TabButton>
+        <TabButton onClick={() => onClick("State")}>State</TabButton>
+        <TabButton onClick={() => onClick("Props")}>Props</TabButton>
+      </>
+    );
+  }
+
+  // Komponenta TabButton:
+  export default function TabButton({ children, onClick }) {
+    return (
+      <li>
+        <button onClick={onClick}>{children}</button>
+      </li>
+    );
+  }
+
+  // Objašnjenje:
+  // Kada koristimo <TabButton onClick={() => onClick("Components")}>...</TabButton>,
+  // zapravo prosleđujemo funkciju (callback) koju React ne izvršava odmah prilikom renderovanja.
+  // Ta funkcija se poziva *tek kada korisnik klikne dugme*.
+  // To omogućava da prosledimo i dodatne argumente (npr. "Components") u funkciju `onClick`.
+  // Da nismo koristili arrow funkciju, `onClick("Components")` bi se odmah izvršio prilikom učitavanja komponente,
+  // što nije poželjno u ovom slučaju.
+
+
+  Dakle ovde se radi o callback funkciji a to je 
+  👉 Callback funkcija u JavaScriptu je funkcija koja se prosleđuje drugoj funkciji kao argument i poziva se kasnije.
+  
+  Primer
+
+  function pozdrav(ime) {
+  console.log("Zdravo, " + ime);
+}
+
+function obradiKorisnika(callback) {
+  const ime = "Marko";
+  callback(ime); // pozivamo prosleđenu funkciju
+}
+
+obradiKorisnika(pozdrav); // → Zdravo, Marko
+
+Callback se ne izvršava odmah, već kad i kako mi to odlučimo — 
+često se koristi za asinkrone operacije (npr. kada se završi učitavanje podataka).
+
+*/
